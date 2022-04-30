@@ -52,9 +52,6 @@ void bookshop::display_all_books() {
         cout << endl << "---------------------------------------" << endl;
         i++;
     }
-
-
-    // return 0;
 }
 
 void bookshop::add_book(string title, string authorFirstname, string authorSurname, int copies) {    
@@ -69,12 +66,13 @@ void bookshop::add_book(string title, string authorFirstname, string authorSurna
   
     FILE *o_file = fopen(fileName.c_str(), "w+");
     if (o_file) {
-        fwrite(fileText.c_str(), 1, fileText.size(), o_file);
+        fwrite(fileText.c_str(), 1, fileText.size(), o_file); // Write in file
+        fclose(o_file); // Properly close file
     }
 }
 
 void bookshop::display_choices() {
-    string bookshop_choices[] = {
+    string bookshop_choices[5] = {
         "Display all books",
         "Add a new book",
         "Update an existing book",
@@ -82,7 +80,7 @@ void bookshop::display_choices() {
         "Search for a book"
     };
 
-    for (unsigned int i = 0; i < sizeof(bookshop_choices); i++) {
+    for (unsigned int i = 0; i < 5; i++) {
         cout << i << ": " << bookshop_choices[i] << endl;
     }
 }
@@ -93,12 +91,19 @@ int main() {
     string firstname;
     string surname;
     int copies;
+    
+    cout << "Welcome to the bookshop!" << endl;     
+    
 
-    int choice;
-    cout << "Welcome to the bookshop!" << endl;        
-    while (choice != 5) {
-        cout << "What do you want to do?" << endl;        
+    int choice;   
+    do {
         bookshop.display_choices();
+        cout << "What do you want to do?" << endl;    
+        // cout << "cin clear" << endl;
+        // cin.clear();
+        // cout << "cin ignore" << endl;
+        // cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        // cout << "input choice" << endl;
         cin >> choice;
 
         switch (choice) {
@@ -106,6 +111,8 @@ int main() {
                 bookshop.display_all_books();
                 break;
             case 1: 
+                cin.clear();
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 cout << "Title: ";
                 getline(cin, title);
                 cout << "author firstname: ";
@@ -116,22 +123,18 @@ int main() {
                 cin >> copies;    
                 bookshop.add_book(title, firstname, surname, copies);
                 break;
-            case 2: 
-                cout << "case 2" << endl;
-                break;
-            case 3: 
-                cout << "case 3" << endl;
-                break;
-            case 4: 
-                cout << "case 4" << endl;
-                break;
-            case 5: 
-                cout << "case 5" << endl;
-                break;
             default:
                 cout << "not a known option" << endl;
                 break;
         }
-    }
+    } while(choice != 5);
     cout << "Goodbye!" << endl;
+    // return 0;
+
+    // int choice;
+
+    // do {
+    //     cout << "choice: ";
+    //     cin >> choice;
+    // } while (choice != 5);
 }
