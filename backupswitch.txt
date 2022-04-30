@@ -1,0 +1,35 @@
+
+
+
+        switch(choice) {
+            case 0: 
+                bookshop.display_all_books();
+                break;
+            case 1:
+                string title;
+                string firstname;
+                string surname;
+                int copies;
+                cout << "Title: ";
+                getline(cin, title);
+                cout << "author firstname: ";
+                cin >> firstname;
+                cout << "author surname: ";
+                cin >> surname;
+                cout << "copies: ";
+                cin >> copies;    
+                bookshop.add_book(title, firstname, surname, copies);
+                break;
+            case 2:
+                cout << "not a known number";
+                break;
+            case 3:
+                cout << "not a known number";
+                break;
+            case 4:
+                cout << "not a known number";
+                break;
+            case 5:
+                cout << "Goodbye!";
+                break;
+        }
