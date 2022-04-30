@@ -14,7 +14,7 @@ class bookshop {
         void delete_book();        
         void update_book();
         void display_all_books();
-        void details_book();
+        void search_book(string bookName);
         void display_choices();
 };
 
@@ -54,6 +54,19 @@ void bookshop::display_all_books() {
     }
 }
 
+void bookshop::search_book(string bookName) {
+    bookName = bookName + ".txt";
+    fstream new_file;
+    new_file.open(bookName, ios::in); // open file to perform read operation
+    if (new_file.is_open()) {
+        string tp;
+        while(getline(new_file, tp)) {
+            cout << tp << "\n";
+        }
+        new_file.close();
+    }
+}
+
 void bookshop::add_book(string title, string authorFirstname, string authorSurname, int copies) {    
     book book;
     book.authorSurname = authorSurname;
@@ -75,9 +88,9 @@ void bookshop::display_choices() {
     string bookshop_choices[5] = {
         "Display all books",
         "Add a new book",
+        "Search a book",
         "Update an existing book",
         "Delete an existing book",
-        "Search for a book"
     };
 
     for (unsigned int i = 0; i < 5; i++) {
@@ -87,14 +100,13 @@ void bookshop::display_choices() {
 
 int main() {
     bookshop bookshop;
+    string bookName;
     string title;
     string firstname;
     string surname;
     int copies;
     
-    cout << "Welcome to the bookshop!" << endl;     
-    
-
+    cout << "Welcome to the bookshop!" << endl;
     int choice;   
     do {
         bookshop.display_choices();
@@ -113,6 +125,7 @@ int main() {
             case 1: 
                 cin.clear();
                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
                 cout << "Title: ";
                 getline(cin, title);
                 cout << "author firstname: ";
@@ -122,6 +135,14 @@ int main() {
                 cout << "copies: ";
                 cin >> copies;    
                 bookshop.add_book(title, firstname, surname, copies);
+                break;
+            case 2:
+                cin.clear();
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+                cout << "Type the name of the book: ";
+                getline(cin, bookName);
+                bookshop.search_book(bookName);
                 break;
             default:
                 cout << "not a known option" << endl;
